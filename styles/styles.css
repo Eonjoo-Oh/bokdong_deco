@@ -37,6 +37,17 @@
 	margin-left: 20px;
 }
 
+.main__nav__bokdong {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.nav__bokdong__options img{
+	width: 100px;
+	height: 100px;
+}
 .main__drawing {
 	display: flex;
 	flex-direction: row;
