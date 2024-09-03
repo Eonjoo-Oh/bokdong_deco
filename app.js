@@ -11,6 +11,8 @@ let bokdongId = 0;
 let bokdongNum = 0;
 const bokdongArr = [];
 
+let selectedBokdong = null;
+
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
 bokdongCanvas.width = 700;
@@ -45,7 +47,6 @@ function generateBokdongId() {
 	return ++bokdongId;
 }
 
-
 //---------------------------------------
 
 function onBackgroundClick(event) {
@@ -68,9 +69,23 @@ function onBokdongNavClick(event) {
 		alert("최대 수용 인원을 초과했습니다!");
 		return ;
 	}
+	let x, y, width, height;
 	if (event.target.tagName === 'IMG') {
 		const imgSrc = event.target.getAttribute('src');
-		const newBokdong = new Bokdong(imgSrc, 0, 0, 100, 100, generateBokdongId());
+		if (imgSrc === 'srcs/bokdong/bokdong1.png') {
+			x = 208;
+			y = 4;
+			width = 241;
+			height = 688;
+		}
+
+		if (imgSrc === 'srcs/bokdong/bokdong2.png') {
+			x = 12;
+			y = 215;
+			width = 676;
+			height = 195;
+		}
+		const newBokdong = new Bokdong(imgSrc, x, y, width, height, generateBokdongId());
 		bokdongArr.push(newBokdong);
 		bokdongCtx.drawImage(newBokdong.image, 0, 0, bokdongCanvas.width, bokdongCanvas.height);
 
@@ -78,5 +93,19 @@ function onBokdongNavClick(event) {
 	}
 }
 
+function onBokdongClick(event) {
+    const x = event.offsetX;
+    const y = event.offsetY;
+	console.log(x + ", " + y);
+    selectedBokdong = bokdongArr.find(bokdong => 
+        x >= bokdong.x && x <= bokdong.x + bokdong.width &&
+        y >= bokdong.y && y <= bokdong.y + bokdong.height
+    );
+
+    console.log('Selected Bokdong:', selectedBokdong);
+
+}
+
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
+bokdongCanvas.addEventListener("click", onBokdongClick);
