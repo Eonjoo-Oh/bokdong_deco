@@ -51,14 +51,13 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-
-	/* background-color: aqua; */
 }
 
 .nav__bokdong__options img{
 	width: 100px;
 	height: 100px;
 }
+
 .main__drawing {
 	display: flex;
 	flex-direction: row;
@@ -71,6 +70,34 @@
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.main__drawing__canvas {
+	position: relative;
+	width: 700px;
+	height: 700px;
+}
+
+.main__drawing__canvas--background {
+	width: 700px;
+	height: 700px;
+	background-color: white;
+	border: solid;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+}
+
+.main__drawing__canvas--bokdong {
+	width: 700px;
+	height: 700px;
+	background-color: transparent;
+	border: solid;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
 }
 
 .drawing__tool__color__option {
@@ -89,9 +116,3 @@
 	align-items: start;
 }
 
-canvas {
-	width: 700px;
-	height: 700px;
-	background-color: white;
-	border: solid;
-}
