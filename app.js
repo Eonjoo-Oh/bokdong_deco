@@ -1,10 +1,15 @@
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-const bgPhoto = document.getElementById("background");
+const backgroundCanvas = document.querySelector("#backgroundCanvas");
+const backgroundCtx = backgroundCanvas.getContext("2d");
+const bokdongCanvas = document.querySelector("#bokdongCanvas");
+const bokdongCtx = bokdongCanvas.getContext("2d");
+
+const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 
-canvas.width = 700;
-canvas.height = 700;
+backgroundCanvas.width = 700;
+backgroundCanvas.height = 700;
+bokdongCanvas.width = 700;
+bokdongCanvas.height = 700;
 
 
 function onBgClick(event) {
@@ -15,8 +20,8 @@ function onBgClick(event) {
 		img.src = imgSrc;
 
 		img.onload = function() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+			backgroundCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+			backgroundCtx.drawImage(img, 0, 0, backgroundCanvas.width, backgroundCanvas.height);
 		};
 	}
 }
@@ -29,10 +34,10 @@ function onBokdongClick(event) {
 		img.src = imgSrc;
 
 		img.onload = function() {
-			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+			bokdongCtx.drawImage(img, 0, 0, bokdongCanvas.width, bokdongCanvas.height);
 		};
 	}
 }
 
-bgPhoto.addEventListener("click", onBgClick);
+background.addEventListener("click", onBgClick);
 bokdong.addEventListener("click", onBokdongClick);
