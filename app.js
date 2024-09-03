@@ -7,6 +7,10 @@ const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSllider");
 
+let bokdongId = 0;
+let bokdongNum = 0;
+const bokdongArr = [];
+
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
 bokdongCanvas.width = 700;
@@ -24,7 +28,7 @@ class Bokdong {
 		this.height = height;
 		this.image = new Image();
 		this.image.src = imgSrc;
-		bokdongNum++;
+		++bokdongNum;
 	}
 
 	drawBokdong(bokdongCtx) {
@@ -37,13 +41,11 @@ class Bokdong {
 	}
 }
 
-let bokdongId = 0;
-let bokdongNum = 0;
 function generateBokdongId() {
 	return ++bokdongId;
 }
 
-const bokdongArr = [];
+
 //---------------------------------------
 
 function onBackgroundClick(event) {
