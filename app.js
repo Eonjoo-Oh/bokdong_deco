@@ -24,6 +24,7 @@ class Bokdong {
 		this.height = height;
 		this.image = new Image();
 		this.image.src = imgSrc;
+		bokdongNum++;
 	}
 
 	drawBokdong(bokdongCtx) {
@@ -37,6 +38,7 @@ class Bokdong {
 }
 
 let bokdongId = 0;
+let bokdongNum = 0;
 function generateBokdongId() {
 	return ++bokdongId;
 }
@@ -60,6 +62,10 @@ function onBackgroundClick(event) {
 
 function onBokdongNavClick(event) {
 	console.log("onbockdongNavclick!");
+	if (bokdongNum >= 10) {
+		alert("최대 수용 인원을 초과했습니다!");
+		return ;
+	}
 	if (event.target.tagName === 'IMG') {
 		const imgSrc = event.target.getAttribute('src');
 		const newBokdong = new Bokdong(imgSrc, 0, 0, 100, 100, generateBokdongId());
