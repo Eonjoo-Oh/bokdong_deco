@@ -36,6 +36,7 @@ class Bokdong {
 	resize(newWidth, newHeight) {
 		this.width = newWidth;
 		this.height = newHeight;
+		//x, y좌표도 갱신해줘야됨. 원래사이즈보다 커지면 차이만큼 + 아니면 차이만큼 -
 	}
 }
 
@@ -43,10 +44,6 @@ function generateBokdongId() {
 	return ++bokdongId;
 }
 
-function drawBokdongs() {
-	bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
-	bokdongArr.forEach(bokdong => bokdong.drawBokdong());
-}
 //---------------------------------------
 
 function onBackgroundClick(event) {
@@ -97,11 +94,13 @@ function onBokdongClick(event) {
     const x = event.offsetX;
     const y = event.offsetY;
 	console.log(x + ", " + y);
-    selectedBokdong = bokdongArr.find(bokdong => 
-        x >= bokdong.x && x <= bokdong.x + bokdong.width &&
-        y >= bokdong.y && y <= bokdong.y + bokdong.height
-    );
-    console.log('Selected Bokdong:', selectedBokdong.id);
+	for(let i = bokdongArr.length - 1; i >= 0; i--) {
+		if (x >= bokdongArr[i].x && x <= bokdongArr[i].x + bokdongArr[i].width &&
+			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
+				selectedBokdong = bokdongArr[i];
+				return;
+			}
+	}
 }
 
 function resizeBokdong(event) {
