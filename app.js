@@ -113,15 +113,11 @@ bokdong.addEventListener("click", onBokdongNavClick);
 bokdongCanvas.addEventListener("click", onBokdongClick);
 bokdongSizeSlider.addEventListener('input', function() {
     if (selectedBokdong) {
-        const newSize = parseInt(this.value, 10);
+        const newSize = this.value;
         selectedBokdong.resize(newSize, newSize);  // 가로와 세로 크기를 동일하게 조절
-		console.log("resize! : ", selectedBokdong);
+		console.log("newSize: ", newSize);
+		// console.log("resize! : ", selectedBokdong);
 		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
 		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
-		
-		// bokdongCtx.drawImage(selectedBokdong.image, selectedBokdong.x, selectedBokdong.y, bokdongCanvas.width, bokdongCanvas.height);
-		// bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
-        // 
-		// drawBokdong();  // 복동이 재그리기
     }
 });
