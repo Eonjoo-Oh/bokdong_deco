@@ -33,10 +33,6 @@ class Bokdong {
 		++bokdongNum;
 	}
 
-	// drawBokdong() {
-	// 	drawImage(this.image, this.x, this.y, this.width, this.height)
-	// }
-
 	resize(newWidth, newHeight) {
 		this.width = newWidth;
 		this.height = newHeight;
@@ -108,16 +104,16 @@ function onBokdongClick(event) {
     console.log('Selected Bokdong:', selectedBokdong.id);
 }
 
+function resizeBokdong(event) {
+	if (selectedBokdong) {
+		const inputValue = parseInt(event.target.value, 10);
+		selectedBokdong.resize(inputValue, inputValue);
+		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
+		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
+	}
+}
+
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
 bokdongCanvas.addEventListener("click", onBokdongClick);
-bokdongSizeSlider.addEventListener('input', function() {
-    if (selectedBokdong) {
-        const newSize = this.value;
-        selectedBokdong.resize(newSize, newSize);  // 가로와 세로 크기를 동일하게 조절
-		console.log("newSize: ", newSize);
-		// console.log("resize! : ", selectedBokdong);
-		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
-		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
-    }
-});
+bokdongSizeSlider.addEventListener("input", resizeBokdong);
