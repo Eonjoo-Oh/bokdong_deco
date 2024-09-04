@@ -98,9 +98,13 @@ function onBokdongClick(event) {
 		if (x >= bokdongArr[i].x && x <= bokdongArr[i].x + bokdongArr[i].width &&
 			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
 				selectedBokdong = bokdongArr[i];
+				bokdongSizeSlider.style.display = 'block';
+				console.log("selecetedBokdong: ", selectedBokdong);
 				return;
 			}
 	}
+	selectedBokdong = null;
+	bokdongSizeSlider.style.display = 'none';
 }
 
 function resizeBokdong(event) {
