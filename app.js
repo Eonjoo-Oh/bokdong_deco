@@ -100,15 +100,23 @@ function onBokdongNavClick(event) {
 		if (imgSrc === 'srcs/bokdong/bokdong1.png') {
 			x = 208;
 			y = 4;
-			width = 241;
-			height = 688;
+			width = 400;
+			height = 400;
+			// x = 208;
+			// y = 4;
+			// width = 241;
+			// height = 688; 초기설정값
 		}
 
 		if (imgSrc === 'srcs/bokdong/bokdong2.png') {
 			x = 12;
 			y = 215;
-			width = 676;
-			height = 195;
+			width = 400;
+			height = 400;
+			// x = 12;
+			// y = 215;
+			// width = 676;
+			// height = 195; 초기설정값
 		}
 		const newBokdong = new Bokdong(imgSrc, x, y, width, height, generateBokdongId());
 		bokdongArr.push(newBokdong);
