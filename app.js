@@ -11,7 +11,11 @@ let bokdongId = 0;
 let bokdongNum = 0;
 const bokdongArr = [];
 
-let selectedBokdong = null;
+let activeBokdong = null;
+
+let isDragging = false;
+let offsetX;
+let offsetY;
 
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
@@ -46,17 +50,16 @@ function generateBokdongId() {
 
 //---------------- util funcs -----------------------
 
-function isBokdongSelected(event) {
+function selectBokdong(event) {
 	const x = event.offsetX;
     const y = event.offsetY;
 	console.log(x + ", " + y);
 	for(let i = bokdongArr.length - 1; i >= 0; i--) {
 		if (x >= bokdongArr[i].x && x <= bokdongArr[i].x + bokdongArr[i].width &&
 			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
-				selectedBokdong = bokdongArr[i];
-				// bokdongSizeSlider.style.display = 'block';
-				console.log("selecetedBokdong: ", selectedBokdong);
-				return true;
+				activeBokdong = bokdongArr[i];
+				console.log("selecetedBokdong: ", activeBokdong);
+				return activeBokdong;
 			}
 			return false;
 	}
@@ -65,8 +68,8 @@ function isBokdongSelected(event) {
 
 //--------------------------------------
 function onDocumentClick(event) {
-	if (!isBokdongSelected(event) && event.target !== bokdongSizeSlider) {
-		selectedBokdong = null;
+	if (!selectBokdong(event) && event.target !== bokdongSizeSlider) {
+		activeBokdong = null;
 		bokdongSizeSlider.style.display = 'none';
 	}
 }
@@ -109,24 +112,51 @@ function onBokdongNavClick(event) {
 		}
 		const newBokdong = new Bokdong(imgSrc, x, y, width, height, generateBokdongId());
 		bokdongArr.push(newBokdong);
-		bokdongCtx.drawImage(newBokdong.image, 0, 0, bokdongCanvas.width, bokdongCanvas.height);
+		bokdongCtx.drawImage(newBokdong.image, x, y, width, height);
 
 		console.log(bokdongArr);
 	}
 }
 
 function onBokdongClick(event) {
-	if (isBokdongSelected(event)) {
+	if (selectBokdong(event)) {
 		bokdongSizeSlider.style.display = 'block';
 	}
 }
 
 function resizeBokdong(event) {
-	if (selectedBokdong) {
+	if (activeBokdong) {
 		const inputValue = parseInt(event.target.value, 10);
-		selectedBokdong.resize(inputValue, inputValue);
+		activeBokdong.resize(inputValue, inputValue);
 		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
 		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
+	}
+}
+
+function onBokdongMouseDown(event) {
+	if (selectBokdong(event)) {
+		isDragging = true;
+		offsetX = event.offsetX - activeBokdong.x;
+		offsetY = event.offsetY - activeBokdong.y;
+		console.log("Drag start");
+	}
+}
+
+function onBokdongMouseMove(event) {
+	if (isDragging && activeBokdong) {
+		activeBokdong.x = event.offsetX - offsetX;
+		activeBokdong.y = event.offsetY - offsetY;
+		
+		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
+		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
+		console.log("mouseMove!");
+	}
+}
+
+function onBokdongMouseUp(event) {
+	if (isDragging) {
+		isDragging = false;
+		console.log("drag done");
 	}
 }
 
@@ -135,3 +165,6 @@ background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
 bokdongCanvas.addEventListener("click", onBokdongClick);
 bokdongSizeSlider.addEventListener("input", resizeBokdong);
+bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
+bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
+bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
