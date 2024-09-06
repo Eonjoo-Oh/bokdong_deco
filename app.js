@@ -46,6 +46,13 @@ function generateBokdongId() {
 
 //---------------------------------------
 
+function onDocumentClick(event) {
+	if (!bokdongCanvas.contains(event.target) && event.target !== bokdongSizeSlider) {
+		selectedBokdong = null;
+		bokdongSizeSlider.style.display = 'none';
+	}
+}
+
 function onBackgroundClick(event) {
 	console.log("onbackgroundclick!");
 	if (event.target.tagName === 'IMG') {
@@ -116,6 +123,7 @@ function resizeBokdong(event) {
 	}
 }
 
+document.addEventListener("click", onDocumentClick); 
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
 bokdongCanvas.addEventListener("click", onBokdongClick);
