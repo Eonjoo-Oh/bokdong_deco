@@ -61,8 +61,8 @@ function selectBokdong(event) {
 				console.log("selecetedBokdong: ", activeBokdong);
 				return activeBokdong;
 			}
-			return false;
-	}
+		}
+	return false;
 }
 
 
