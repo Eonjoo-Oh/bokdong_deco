@@ -44,10 +44,28 @@ function generateBokdongId() {
 	return ++bokdongId;
 }
 
-//---------------------------------------
+//---------------- util funcs -----------------------
 
+function isBokdongSelected(event) {
+	const x = event.offsetX;
+    const y = event.offsetY;
+	console.log(x + ", " + y);
+	for(let i = bokdongArr.length - 1; i >= 0; i--) {
+		if (x >= bokdongArr[i].x && x <= bokdongArr[i].x + bokdongArr[i].width &&
+			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
+				selectedBokdong = bokdongArr[i];
+				// bokdongSizeSlider.style.display = 'block';
+				console.log("selecetedBokdong: ", selectedBokdong);
+				return true;
+			}
+			return false;
+	}
+}
+
+
+//--------------------------------------
 function onDocumentClick(event) {
-	if (!bokdongCanvas.contains(event.target) && event.target !== bokdongSizeSlider) {
+	if (!isBokdongSelected(event) && event.target !== bokdongSizeSlider) {
 		selectedBokdong = null;
 		bokdongSizeSlider.style.display = 'none';
 	}
@@ -98,20 +116,9 @@ function onBokdongNavClick(event) {
 }
 
 function onBokdongClick(event) {
-    const x = event.offsetX;
-    const y = event.offsetY;
-	console.log(x + ", " + y);
-	for(let i = bokdongArr.length - 1; i >= 0; i--) {
-		if (x >= bokdongArr[i].x && x <= bokdongArr[i].x + bokdongArr[i].width &&
-			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
-				selectedBokdong = bokdongArr[i];
-				bokdongSizeSlider.style.display = 'block';
-				console.log("selecetedBokdong: ", selectedBokdong);
-				return;
-			}
+	if (isBokdongSelected(event)) {
+		bokdongSizeSlider.style.display = 'block';
 	}
-	selectedBokdong = null;
-	bokdongSizeSlider.style.display = 'none';
 }
 
 function resizeBokdong(event) {
