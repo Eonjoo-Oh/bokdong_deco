@@ -6,16 +6,19 @@ const bokdongCtx = bokdongCanvas.getContext("2d");
 const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSlider");
+const bokdongEraser = document.getElementById("bokdongEraser");
+const bokdongEraserDone = document.getElementById("bokdongEraserDone");
 
 let bokdongId = 0;
 let bokdongNum = 0;
 const bokdongArr = [];
 
 let activeBokdong = null;
-
 let isDragging = false;
 let offsetX;
 let offsetY;
+
+let isErasing = false;
 
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
@@ -62,7 +65,7 @@ function selectBokdong(event) {
 				return activeBokdong;
 			}
 		}
-	return false;
+	return null;
 }
 
 
@@ -71,6 +74,7 @@ function onDocumentClick(event) {
 	if (!selectBokdong(event) && event.target !== bokdongSizeSlider) {
 		activeBokdong = null;
 		bokdongSizeSlider.style.display = 'none';
+		isDragging = false;
 	}
 }
 
@@ -168,6 +172,16 @@ function onBokdongMouseUp(event) {
 	}
 }
 
+function onBokdongEraserClick(event) {
+	isErasing = true;
+	bokdongEraserDone.style.display = "block";
+}
+
+function onBokdongEraserDoneClick(event) {
+	isErasing = false;
+	bokdongEraserDone.style.display = "none";
+}
+
 document.addEventListener("click", onDocumentClick); 
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
@@ -176,3 +190,5 @@ bokdongSizeSlider.addEventListener("input", resizeBokdong);
 bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
 bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
 bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
+bokdongEraser.addEventListener("click", onBokdongEraserClick);
+bokdongEraserDone.addEventListener("click", onBokdongEraserDoneClick);
