@@ -19,6 +19,8 @@ let offsetX;
 let offsetY;
 
 let isErasing = false;
+let eraserSize = 30;
+let isMouseDown = false;
 
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
@@ -37,13 +39,45 @@ class Bokdong {
 		this.height = height;
 		this.image = new Image();
 		this.image.src = imgSrc;
+		this.imageData = null;
 		++bokdongNum;
 	}
 
 	resize(newWidth, newHeight) {
+		const oldWidth = this.width;
+		const oldHeight = this.height;
+
 		this.width = newWidth;
 		this.height = newHeight;
+		console.log("resize!: ",  this.width, ", ", this.height);
 		//x, y좌표도 갱신해줘야됨. 원래사이즈보다 커지면 차이만큼 + 아니면 차이만큼 -
+
+		// if (this.imageData) {
+		// 	// Create a new canvas to scale the image data
+		// 	const tempCanvas = document.createElement('canvas');
+		// 	tempCanvas.width = oldWidth;
+		// 	tempCanvas.height = oldHeight;
+		// 	const tempCtx = tempCanvas.getContext('2d');
+	
+		// 	// Draw the old image data onto the temp canvas
+		// 	tempCtx.putImageData(this.imageData, 0, 0);
+	
+		// 	// Scale the image data to the new size
+		// 	const scaledImageData = tempCtx.getImageData(0, 0, oldWidth, oldHeight);
+	
+		// 	// Resize the bokdong's imageData
+		// 	const resizedCanvas = document.createElement('canvas');
+		// 	resizedCanvas.width = newWidth;
+		// 	resizedCanvas.height = newHeight;
+		// 	const resizedCtx = resizedCanvas.getContext('2d');
+	
+		// 	// Draw the scaled image data onto the resized canvas
+		// 	resizedCtx.putImageData(scaledImageData, 0, 0);
+		// 	resizedCtx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
+	
+		// 	// Update the imageData of the bokdong
+		// 	this.imageData = resizedCtx.getImageData(0, 0, newWidth, newHeight);
+		// }
 	}
 }
 
@@ -54,6 +88,7 @@ function generateBokdongId() {
 //---------------- util funcs -----------------------
 
 function selectBokdong(event) {
+	// if (isErasing) return null;
 	const x = event.offsetX;
     const y = event.offsetY;
 	console.log(x + ", " + y);
@@ -68,6 +103,19 @@ function selectBokdong(event) {
 	return null;
 }
 
+function drawBokdong(event) {
+	bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
+	bokdongArr.forEach((bokdong) => {
+		if (bokdong.imageData) {
+			console.log("imageData!");
+			// 지운 상태가 저장된 이미지 데이터가 있으면 사용
+			bokdongCtx.putImageData(bokdong.imageData, bokdong.x, bokdong.y);
+		} else {
+			// 지운 상태가 없는 원래 이미지를 그림
+			bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height);
+		}
+	});
+}
 
 //--------------------------------------
 function onDocumentClick(event) {
@@ -140,13 +188,46 @@ function resizeBokdong(event) {
 	if (activeBokdong) {
 		const inputValue = parseInt(event.target.value, 10);
 		activeBokdong.resize(inputValue, inputValue);
-		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
-		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
+		drawBokdong(event);
 	}
 }
 
+function eraseBokdong(event) {
+	if (!isMouseDown) return;
+
+	const x = event.offsetX;
+	const y = event.offsetY;
+
+	bokdongCtx.save();
+	bokdongCtx.globalCompositeOperation = "destination-out";  // 투명하게 그릴 수 있도록 설정
+    bokdongCtx.beginPath();
+    bokdongCtx.arc(x, y, eraserSize / 2, 0, Math.PI * 2);  // 원형 지우개
+    bokdongCtx.fill();
+    bokdongCtx.restore();  // 원래 상태 복구
+
+    // 복동이의 이미지가 그려진 영역을 지정하여 이미지 데이터를 가져옴
+    if (activeBokdong) {
+		console.log("erase activebokdong!", activeBokdong);
+        const bokdongImageData = bokdongCtx.getImageData(
+            activeBokdong.x, 
+            activeBokdong.y, 
+            activeBokdong.width, 
+            activeBokdong.height
+        );
+        activeBokdong.imageData = bokdongImageData;
+    }
+}
+
 function onBokdongMouseDown(event) {
-	if (selectBokdong(event)) {
+	console.log(isErasing);
+	isMouseDown = true;
+	activeBokdong = selectBokdong(event);
+
+	if (isErasing) {
+		eraseBokdong(event);
+	}
+
+	else if (selectBokdong(event)) {
 		isDragging = true;
 		offsetX = event.offsetX - activeBokdong.x;
 		offsetY = event.offsetY - activeBokdong.y;
@@ -155,17 +236,21 @@ function onBokdongMouseDown(event) {
 }
 
 function onBokdongMouseMove(event) {
-	if (isDragging && activeBokdong) {
+	if (isErasing) {
+		eraseBokdong(event);
+	}
+
+	else if (isDragging && activeBokdong) {
 		activeBokdong.x = event.offsetX - offsetX;
 		activeBokdong.y = event.offsetY - offsetY;
 		
-		bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
-		bokdongArr.forEach((bokdong) => bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height));
+		drawBokdong(event);
 		console.log("mouseMove!");
 	}
 }
 
 function onBokdongMouseUp(event) {
+	isMouseDown = false;
 	if (isDragging) {
 		isDragging = false;
 		console.log("drag done");
@@ -175,6 +260,7 @@ function onBokdongMouseUp(event) {
 function onBokdongEraserClick(event) {
 	isErasing = true;
 	bokdongEraserDone.style.display = "block";
+	bokdongCtx.strokeStyle = "white";
 }
 
 function onBokdongEraserDoneClick(event) {
