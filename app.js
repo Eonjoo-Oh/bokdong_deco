@@ -6,7 +6,6 @@ const bokdongCtx = bokdongCanvas.getContext("2d");
 const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSlider");
-const bokdongEraser = document.getElementById("bokdongEraser");
 const resetBtn = document.getElementById("resetBtn");
 const saveBtn = document.getElementById("saveBtn");
 
@@ -16,12 +15,6 @@ const bokdongArr = [];
 
 let activeBokdong = null;
 let isDragging = false;
-let offsetX;
-let offsetY;
-
-let isErasing = false;
-let eraserSize = 30;
-let isMouseDown = false;
 
 backgroundCanvas.width = 700;
 backgroundCanvas.height = 700;
@@ -176,9 +169,7 @@ function onBokdongEraserClick(event) {
 	bokdongNum--;
 }
 
-
 function onBokdongMouseDown(event) {
-	isMouseDown = true;
 	activeBokdong = selectBokdong(event);
 
 	if (selectBokdong(event)) {
@@ -200,7 +191,6 @@ function onBokdongMouseMove(event) {
 }
 
 function onBokdongMouseUp(event) {
-	isMouseDown = false;
 	if (isDragging) {
 		isDragging = false;
 		console.log("drag done");
