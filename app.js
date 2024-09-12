@@ -211,16 +211,33 @@ function onResetClick(event) {
 	const resetConfirm = confirm("초기화 하시겠습니까?");
 
 	if (resetConfirm) {
-		ResetCanvas();
+		resetCanvas();
 	}
 }
 
-function ResetCanvas(event) {
+function resetCanvas(event) {
 	bokdongArr.length = 0;
 	activeBokdong = null;
 	bokdongNum = 0;
 	bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
 	backgroundCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+}
+
+function onSaveClick() {
+    const combinedCanvas = document.createElement('canvas');
+    const combinedCtx = combinedCanvas.getContext('2d');
+
+    combinedCanvas.width = backgroundCanvas.width;
+    combinedCanvas.height = backgroundCanvas.height;
+
+    combinedCtx.drawImage(backgroundCanvas, 0, 0);
+    combinedCtx.drawImage(bokdongCanvas, 0, 0);
+
+    const link = document.createElement('a');
+    link.href = combinedCanvas.toDataURL('image/png');
+    link.download = 'bokdonge.png';
+
+    link.click();
 }
 
 document.addEventListener("click", onDocumentClick); 
