@@ -44,40 +44,9 @@ class Bokdong {
 	}
 
 	resize(newWidth, newHeight) {
-		const oldWidth = this.width;
-		const oldHeight = this.height;
-
 		this.width = newWidth;
 		this.height = newHeight;
 		console.log("resize!: ",  this.width, ", ", this.height);
-		//x, y좌표도 갱신해줘야됨. 원래사이즈보다 커지면 차이만큼 + 아니면 차이만큼 -
-
-		// if (this.imageData) {
-		// 	// Create a new canvas to scale the image data
-		// 	const tempCanvas = document.createElement('canvas');
-		// 	tempCanvas.width = oldWidth;
-		// 	tempCanvas.height = oldHeight;
-		// 	const tempCtx = tempCanvas.getContext('2d');
-	
-		// 	// Draw the old image data onto the temp canvas
-		// 	tempCtx.putImageData(this.imageData, 0, 0);
-	
-		// 	// Scale the image data to the new size
-		// 	const scaledImageData = tempCtx.getImageData(0, 0, oldWidth, oldHeight);
-	
-		// 	// Resize the bokdong's imageData
-		// 	const resizedCanvas = document.createElement('canvas');
-		// 	resizedCanvas.width = newWidth;
-		// 	resizedCanvas.height = newHeight;
-		// 	const resizedCtx = resizedCanvas.getContext('2d');
-	
-		// 	// Draw the scaled image data onto the resized canvas
-		// 	resizedCtx.putImageData(scaledImageData, 0, 0);
-		// 	resizedCtx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
-	
-		// 	// Update the imageData of the bokdong
-		// 	this.imageData = resizedCtx.getImageData(0, 0, newWidth, newHeight);
-		// }
 	}
 }
 
@@ -88,7 +57,6 @@ function generateBokdongId() {
 //---------------- util funcs -----------------------
 
 function selectBokdong(event) {
-	// if (isErasing) return null;
 	const x = event.offsetX;
     const y = event.offsetY;
 	console.log(x + ", " + y);
@@ -97,30 +65,34 @@ function selectBokdong(event) {
 			y >= bokdongArr[i].y && y <= bokdongArr[i].y + bokdongArr[i].height) {
 				activeBokdong = bokdongArr[i];
 				console.log("selecetedBokdong: ", activeBokdong);
+				drawBokdong();
 				return activeBokdong;
 		}
 	}
+	activeBokdong = null;
+	drawBokdong();
 	return null;
 }
 
-function drawBokdong(event) {
+function drawBokdong() {
 	bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
 	bokdongArr.forEach((bokdong) => {
-		if (bokdong.imageData) {
-			console.log("imageData!");
-			// 지운 상태가 저장된 이미지 데이터가 있으면 사용
-			bokdongCtx.putImageData(bokdong.imageData, bokdong.x, bokdong.y);
-		} else {
-			// 지운 상태가 없는 원래 이미지를 그림
+			if (bokdong === activeBokdong) {
+				bokdongCtx.strokeStyle = "red";
+				bokdongCtx.lineWidth = 3;
+				bokdongCtx.strokeRect(bokdong.x, bokdong.y, bokdong.width, bokdong.height);
+			}
 			bokdongCtx.drawImage(bokdong.image, bokdong.x, bokdong.y, bokdong.width, bokdong.height);
-		}
-	});
+		});
 }
 
 //--------------------------------------
 function onDocumentClick(event) {
 	if (!selectBokdong(event) && event.target !== bokdongSizeSlider) {
-		activeBokdong = null;
+		if (activeBokdong) {
+			activeBokdong = null;
+			drawBokdong();
+		}
 		bokdongSizeSlider.style.display = 'none';
 		isDragging = false;
 	}
@@ -223,10 +195,6 @@ function onBokdongMouseDown(event) {
 	isMouseDown = true;
 	activeBokdong = selectBokdong(event);
 
-	// if (isErasing) {
-	// 	eraseBokdong(event);
-	// }
-
 	if (selectBokdong(event)) {
 		isDragging = true;
 		offsetX = event.offsetX - activeBokdong.x;
@@ -236,10 +204,6 @@ function onBokdongMouseDown(event) {
 }
 
 function onBokdongMouseMove(event) {
-	// if (isErasing) {
-	// 	eraseBokdong(event);
-	// }
-
 	if (isDragging && activeBokdong) {
 		activeBokdong.x = event.offsetX - offsetX;
 		activeBokdong.y = event.offsetY - offsetY;
@@ -257,17 +221,6 @@ function onBokdongMouseUp(event) {
 	}
 }
 
-// function onBokdongEraserClick(event) {
-// 	isErasing = true;
-// 	bokdongEraserDone.style.display = "block";
-// 	bokdongCtx.strokeStyle = "white";
-// }
-
-// function onBokdongEraserDoneClick(event) {
-// 	isErasing = false;
-// 	bokdongEraserDone.style.display = "none";
-// }
-
 document.addEventListener("click", onDocumentClick); 
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
@@ -276,5 +229,3 @@ bokdongSizeSlider.addEventListener("input", resizeBokdong);
 bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
 bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
 bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
-// bokdongEraser.addEventListener("click", onBokdongEraserClick);
-// bokdongEraserDone.addEventListener("click", onBokdongEraserDoneClick);
