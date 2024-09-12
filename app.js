@@ -98,8 +98,8 @@ function selectBokdong(event) {
 				activeBokdong = bokdongArr[i];
 				console.log("selecetedBokdong: ", activeBokdong);
 				return activeBokdong;
-			}
 		}
+	}
 	return null;
 }
 
@@ -223,11 +223,11 @@ function onBokdongMouseDown(event) {
 	isMouseDown = true;
 	activeBokdong = selectBokdong(event);
 
-	if (isErasing) {
-		eraseBokdong(event);
-	}
+	// if (isErasing) {
+	// 	eraseBokdong(event);
+	// }
 
-	else if (selectBokdong(event)) {
+	if (selectBokdong(event)) {
 		isDragging = true;
 		offsetX = event.offsetX - activeBokdong.x;
 		offsetY = event.offsetY - activeBokdong.y;
@@ -236,11 +236,11 @@ function onBokdongMouseDown(event) {
 }
 
 function onBokdongMouseMove(event) {
-	if (isErasing) {
-		eraseBokdong(event);
-	}
+	// if (isErasing) {
+	// 	eraseBokdong(event);
+	// }
 
-	else if (isDragging && activeBokdong) {
+	if (isDragging && activeBokdong) {
 		activeBokdong.x = event.offsetX - offsetX;
 		activeBokdong.y = event.offsetY - offsetY;
 		
@@ -257,16 +257,16 @@ function onBokdongMouseUp(event) {
 	}
 }
 
-function onBokdongEraserClick(event) {
-	isErasing = true;
-	bokdongEraserDone.style.display = "block";
-	bokdongCtx.strokeStyle = "white";
-}
+// function onBokdongEraserClick(event) {
+// 	isErasing = true;
+// 	bokdongEraserDone.style.display = "block";
+// 	bokdongCtx.strokeStyle = "white";
+// }
 
-function onBokdongEraserDoneClick(event) {
-	isErasing = false;
-	bokdongEraserDone.style.display = "none";
-}
+// function onBokdongEraserDoneClick(event) {
+// 	isErasing = false;
+// 	bokdongEraserDone.style.display = "none";
+// }
 
 document.addEventListener("click", onDocumentClick); 
 background.addEventListener("click", onBackgroundClick);
@@ -276,5 +276,5 @@ bokdongSizeSlider.addEventListener("input", resizeBokdong);
 bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
 bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
 bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
-bokdongEraser.addEventListener("click", onBokdongEraserClick);
-bokdongEraserDone.addEventListener("click", onBokdongEraserDoneClick);
+// bokdongEraser.addEventListener("click", onBokdongEraserClick);
+// bokdongEraserDone.addEventListener("click", onBokdongEraserDoneClick);
