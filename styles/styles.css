@@ -53,12 +53,12 @@
 	align-items: center;
 }
 
-.nav__bokdong__options img{
+.nav__bokdong__options img {
 	width: 100px;
 	height: 100px;
 }
 
-.nav__bokdong__eraser--done {
+.nav__bokdong__eraser {
 	display: none;
 }
 

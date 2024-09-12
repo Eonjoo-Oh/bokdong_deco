@@ -7,7 +7,6 @@ const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSlider");
 const bokdongEraser = document.getElementById("bokdongEraser");
-const bokdongEraserDone = document.getElementById("bokdongEraserDone");
 
 let bokdongId = 0;
 let bokdongNum = 0;
@@ -153,6 +152,7 @@ function onBokdongNavClick(event) {
 function onBokdongClick(event) {
 	if (selectBokdong(event)) {
 		bokdongSizeSlider.style.display = 'block';
+		bokdongEraser.style.display = 'block';
 	}
 }
 
@@ -164,34 +164,41 @@ function resizeBokdong(event) {
 	}
 }
 
-function eraseBokdong(event) {
-	if (!isMouseDown) return;
-
-	const x = event.offsetX;
-	const y = event.offsetY;
-
-	bokdongCtx.save();
-	bokdongCtx.globalCompositeOperation = "destination-out";  // 투명하게 그릴 수 있도록 설정
-    bokdongCtx.beginPath();
-    bokdongCtx.arc(x, y, eraserSize / 2, 0, Math.PI * 2);  // 원형 지우개
-    bokdongCtx.fill();
-    bokdongCtx.restore();  // 원래 상태 복구
-
-    // 복동이의 이미지가 그려진 영역을 지정하여 이미지 데이터를 가져옴
-    if (activeBokdong) {
-		console.log("erase activebokdong!", activeBokdong);
-        const bokdongImageData = bokdongCtx.getImageData(
-            activeBokdong.x, 
-            activeBokdong.y, 
-            activeBokdong.width, 
-            activeBokdong.height
-        );
-        activeBokdong.imageData = bokdongImageData;
-    }
+function onBokdongEraserClick(event) {
+	bokdongArr.splice(bokdongArr.indexOf(activeBokdong), 1);
+	drawBokdong();
+	bokdongEraser.style.display = "none";
+	bokdongSizeSlider.style.display = "none";
+	activeBokdong = null;
 }
 
+// function eraseBokdong(event) {
+// 	if (!isMouseDown) return;
+
+// 	const x = event.offsetX;
+// 	const y = event.offsetY;
+
+// 	bokdongCtx.save();
+// 	bokdongCtx.globalCompositeOperation = "destination-out";  // 투명하게 그릴 수 있도록 설정
+//     bokdongCtx.beginPath();
+//     bokdongCtx.arc(x, y, eraserSize / 2, 0, Math.PI * 2);  // 원형 지우개
+//     bokdongCtx.fill();
+//     bokdongCtx.restore();  // 원래 상태 복구
+
+//     // 복동이의 이미지가 그려진 영역을 지정하여 이미지 데이터를 가져옴
+//     if (activeBokdong) {
+// 		console.log("erase activebokdong!", activeBokdong);
+//         const bokdongImageData = bokdongCtx.getImageData(
+//             activeBokdong.x, 
+//             activeBokdong.y, 
+//             activeBokdong.width, 
+//             activeBokdong.height
+//         );
+//         activeBokdong.imageData = bokdongImageData;
+//     }
+// }
+
 function onBokdongMouseDown(event) {
-	console.log(isErasing);
 	isMouseDown = true;
 	activeBokdong = selectBokdong(event);
 
@@ -226,6 +233,7 @@ background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
 bokdongCanvas.addEventListener("click", onBokdongClick);
 bokdongSizeSlider.addEventListener("input", resizeBokdong);
+bokdongEraser.addEventListener("click", onBokdongEraserClick);
 bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
 bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
 bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
