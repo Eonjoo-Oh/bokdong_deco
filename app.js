@@ -7,6 +7,8 @@ const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSlider");
 const bokdongEraser = document.getElementById("bokdongEraser");
+const resetBtn = document.getElementById("resetBtn");
+const saveBtn = document.getElementById("saveBtn");
 
 let bokdongId = 0;
 let bokdongNum = 0;
@@ -93,6 +95,7 @@ function onDocumentClick(event) {
 			drawBokdong();
 		}
 		bokdongSizeSlider.style.display = 'none';
+		bokdongEraser.style.display = 'none';
 		isDragging = false;
 	}
 }
@@ -170,6 +173,7 @@ function onBokdongEraserClick(event) {
 	bokdongEraser.style.display = "none";
 	bokdongSizeSlider.style.display = "none";
 	activeBokdong = null;
+	bokdongNum--;
 }
 
 
@@ -203,6 +207,22 @@ function onBokdongMouseUp(event) {
 	}
 }
 
+function onResetClick(event) {
+	const resetConfirm = confirm("초기화 하시겠습니까?");
+
+	if (resetConfirm) {
+		ResetCanvas();
+	}
+}
+
+function ResetCanvas(event) {
+	bokdongArr.length = 0;
+	activeBokdong = null;
+	bokdongNum = 0;
+	bokdongCtx.clearRect(0, 0, bokdongCanvas.width, bokdongCanvas.height);
+	backgroundCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+}
+
 document.addEventListener("click", onDocumentClick); 
 background.addEventListener("click", onBackgroundClick);
 bokdong.addEventListener("click", onBokdongNavClick);
@@ -212,3 +232,5 @@ bokdongEraser.addEventListener("click", onBokdongEraserClick);
 bokdongCanvas.addEventListener("mousedown", onBokdongMouseDown);
 bokdongCanvas.addEventListener("mousemove", onBokdongMouseMove);
 bokdongCanvas.addEventListener("mouseup", onBokdongMouseUp);
+resetBtn.addEventListener("click", onResetClick);
+saveBtn.addEventListener("click", onSaveClick);
