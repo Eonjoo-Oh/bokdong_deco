@@ -7,61 +7,71 @@
 	<title>복동이 꾸미기</title>
 </head>
 <body>
-	<main class="main">
-		<header class="main__title">
-			<img src="srcs/assets/LOGO.png">
-		</header>
-		<nav class="main__nav">
-			<div class="main__nav__background">
-				<div class="nav__background__title">배경</div>
-				<div class="nav__background__options" id="background">
-					<div class="nav__background__option">
-						<img src="srcs/background/richHouse.png" alt="rich house background">
+	<header class="main__title">
+		<img src="srcs/assets/LOGO.png">
+	</header>
+	<div class="main__container">
+		<aside class="background">
+				<div class="background__title">
+					<img src="srcs/assets/backgroun_title.png">
+				</div>
+				<div class="background__options" id="background">
+					<div class="background__options--1">
+						<div class="background__option">
+							<img src="srcs/background/richHouse.png" alt="rich house background">
+						</div>
+						<div class="background__option">
+							<img src="srcs/background/beach.png" alt="beach background">
+						</div>
+						<div class="background__option">
+							<img src="srcs/background/castle.png" alt="castle background">
+						</div>
+						<div class="background__option">
+							<img src="srcs/background/fantasy.png" alt="fantasy background">
+						</div>
 					</div>
-					<div class="nav__background__option">
-						<img src="srcs/background/beach.png" alt="beach background">
-					</div>
-					<div class="nav__background__option">
-						<img src="srcs/background/castle.png" alt="castle background">
-					</div>
-					<div class="nav__background__option">
-						<img src="srcs/background/fantasy.png" alt="fantasy background">
-					</div>
-					<div class="nav__background__option">
+					<div class="background__options--2">
+					<div class="background__option">
 						<img src="srcs/background/forest.png" alt="forest background">
 					</div>
-					<div class="nav__background__option">
+					<div class="background__option">
 						<img src="srcs/background/moon.png" alt="moon background">
 					</div>
-					<div class="nav__background__option">
+					<div class="background__option">
 						<img src="srcs/background/palace.png" alt="palace background">
 					</div>
+					<div class="background__option">
+						<img src="srcs/background/sheep.png" alt="sheep background">
+					</div>
 				</div>
-			</div>
-			<div class="main__nav__bokdong">
-				<div class="nav__bokdong__title">복동선택</div>
-				<div class="nav__bokdong__options" id="bokdong">
-					<div class="nav__bokdong__option">
+		</aside>
+		<main class="canvas">
+				<canvas class="main__drawing__canvas--background" id="backgroundCanvas"></canvas>
+				<canvas class="main__drawing__canvas--bokdong" id="bokdongCanvas"></canvas>
+				<div class="canvas__button">
+					<button type="button" class="main__button--reset" id="resetBtn">초기화</button>
+					<button type="button" class="main__button--save" id="saveBtn">저장</button>
+				</div>
+		</main>
+		<aside class="bokdong">
+				<div class="bokdong__title">
+					<img src="srcs/assets/bokdong_title.png">
+				</div>
+				<div class="bokdong__options" id="bokdong">
+					<div class="bokdong__option">
 						<img src="srcs/bokdong/bokdong1.png" alt="seating bokdong">
 					</div>
-					<div class="nav__bokdong__option">
+					<div class="bokdong__option">
 						<img src="srcs/bokdong/bokdong2.png" alt="lying bokdong">
 					</div>
 				</div>
-				<button class="nav__bokdong__eraser" id="bokdongEraser">복동이 지우개</button>
-				<input type="range" class="nav__bokdong__size" id="bokdongSizeSlider" min="100" max="1000" value="500">
+				<div class="bokdong__utils">
+					<button class="bokdong__eraser" id="bokdongEraser">복동이 지우개</button>
+					<input type="range" class="bokdong__size" id="bokdongSizeSlider" min="100" max="1000" value="500">
 				</div>
-			</div>
-		</nav>
-			<div class="main__drawing__canvas">
-				<canvas class="main__drawing__canvas--background" id="backgroundCanvas"></canvas>
-				<canvas class="main__drawing__canvas--bokdong" id="bokdongCanvas"></canvas>
-			</div>
-		<div class="main__button">
-			<button type="button" class="main__button--reset" id="resetBtn">초기화</button>
-			<button type="button" class="main__button--save" id="saveBtn">저장</button>
-		</div>
-	</main>
+		</aside>
+	</div>
+
 	<script src="app.js"></script>
 </body>
 </html>

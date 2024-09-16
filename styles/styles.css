@@ -1,128 +1,138 @@
 @import "reset.css";
 
-.main {
+body {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 }
 
 .main__title {
-	width: 280px;
-	height: 80px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
-.main__nav {
-	width: 700px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: start;
-}
-
-.main__nav__background {
-	display: flex;
-	flex-direction: row;
-	justify-content: start;
-	align-items: center;
-}
-
-.nav__background__options {
 	width: 100%;
-	height: 50px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.nav__background__option img{
-	width: 80px;
-	height: 80px;
-	margin-left: 20px;
-}
-
-.main__nav__bokdong {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.nav__bokdong__options {
-	width: 100%;
-	height: 80px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.nav__bokdong__options img {
-	width: 100px;
-	height: 100px;
-}
-
-.nav__bokdong__eraser {
-	display: none;
-}
-
-.nav__bokdong__size {
-	display: none;
-}
-
-.main__drawing {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-}
-
-.main__drawing__tool {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 }
 
-.main__drawing__canvas {
-	position: relative;
-	width: 700px;
-	height: 700px;
+.main__container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	/* background-color: aqua; */
 }
 
-.main__drawing__canvas--background {
-	width: 700px;
+.background {
+	width: 300px;
 	height: 700px;
-	background-color: white;
-	border: solid;
+	left: 50px;
+	top: 100px;
 	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* Remove position:absolute */
 }
 
+.background__title {
+	width: 140px;
+	height: 140px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.background__title img {
+	width: 140px;
+	height: 140px;
+}
+
+.background__options {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.background__options--1 {
+	margin-left: 10px;
+}
+
+.background__options--2 {
+	margin-right: 10px;
+}
+
+.background__option img {
+	border: 2px solid #f5b197;
+	border-radius: 10px;
+	width: 120px;
+	height: 120px;
+}
+
+/* Remove position absolute and align them with flexbox */
+.main__drawing__canvas--background,
 .main__drawing__canvas--bokdong {
 	width: 700px;
 	height: 700px;
-	background-color: transparent;
-	border: solid;
+	left: 400px;
+	top: 100px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	background-color: white;
+	border: 2px solid #f5b197;
+	border-radius: 15px;
+}
+
+.main__drawing__canvas--bokdong {
+	background-color: transparent;
 	z-index: 1;
 }
 
-.drawing__tool__color__option {
-	width: 50px;
-	height: 50px;
-	border-radius: 25px;
-	cursor: pointer;
-	transition: transform ease-in-out .2s;
+.bokdong {
+	width: 300px;
+	height: 700px;
+	display: flex;
+	left: 1140px;
+	top: 100px;
+	position: absolute;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	/* background-color: antiquewhite; */
+}
+
+.bokdong__title img {
+	width: 140px;
+	height: 140px;
+}
+
+.bokdong__options {
+	width: 100%;
+	height: 80px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.bokdong__option img {
+	width: 120px;
+	height: 120px;
+}
+
+.bokdong__eraser {
+	display: none;
+}
+
+.bokdong__size {
+	display: none;
 }
 
 .main__button {
@@ -132,4 +142,5 @@
 	justify-content: space-between;
 	align-items: start;
 }
+
 
