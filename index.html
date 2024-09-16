@@ -13,7 +13,7 @@
 	<div class="main__container">
 		<aside class="background">
 				<div class="background__title">
-					<img src="srcs/assets/backgroun_title.png">
+					<img src="srcs/assets/background_title.png">
 				</div>
 				<div class="background__options" id="background">
 					<div class="background__options--1">
@@ -49,27 +49,31 @@
 				<canvas class="main__drawing__canvas--background" id="backgroundCanvas"></canvas>
 				<canvas class="main__drawing__canvas--bokdong" id="bokdongCanvas"></canvas>
 				<div class="canvas__button">
-					<button type="button" class="main__button--reset" id="resetBtn">초기화</button>
-					<button type="button" class="main__button--save" id="saveBtn">저장</button>
+					<button type="button" class="main__button--reset" id="resetBtn">
+						<img src="srcs/assets/reset_button.png" alt="reset">
+					</button>
+					<button type="button" class="main__button--save" id="saveBtn">
+						<img src="srcs/assets/save_button.png" alt="save">
+					</button>
 				</div>
 		</main>
 		<aside class="bokdong">
 				<div class="bokdong__title">
 					<img src="srcs/assets/bokdong_title.png">
 				</div>
-				<div class="bokdong__options" id="bokdong">
-					<div class="bokdong__option">
-						<img src="srcs/bokdong/bokdong1.png" alt="seating bokdong">
-					</div>
-					<div class="bokdong__option">
-						<img src="srcs/bokdong/bokdong2.png" alt="lying bokdong">
-					</div>
-				</div>
 				<div class="bokdong__utils">
 					<button class="bokdong__eraser" id="bokdongEraser">복동이 지우개</button>
+					<div class="bokdong__options" id="bokdong">
+						<div class="bokdong__option">
+							<img src="srcs/bokdong/bokdong1.png" alt="seating bokdong">
+						</div>
+						<div class="bokdong__option">
+							<img src="srcs/bokdong/bokdong2.png" alt="lying bokdong">
+						</div>
+					</div>
 					<input type="range" class="bokdong__size" id="bokdongSizeSlider" min="100" max="1000" value="500">
 				</div>
-		</aside>
+			</aside>
 	</div>
 
 	<script src="app.js"></script>
