@@ -36,12 +36,11 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	/* background-color: aqua; */
 	/* Remove position:absolute */
 }
 
 .background__title {
-	width: 140px;
-	height: 140px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -60,14 +59,15 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	/* background-color: aqua; */
 }
 
 .background__options--1 {
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 .background__options--2 {
-	margin-right: 10px;
+	margin-right: 20px;
 }
 
 .background__option img {
@@ -75,6 +75,7 @@ body {
 	border-radius: 10px;
 	width: 120px;
 	height: 120px;
+	margin-bottom: 6px;
 }
 
 .main__drawing__canvas--background,
@@ -157,6 +158,7 @@ body {
 	flex-direction: column;
 	justify-content: start;
 	align-items: center;
+	/* background-color: aquamarine; */
 }
 
 .bokdong__title img {
@@ -207,7 +209,7 @@ body {
 	top: 340px;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: start;
 	align-items: center;
 	/* margin-top: 50px;
 	margin-bottom: 50px; */
