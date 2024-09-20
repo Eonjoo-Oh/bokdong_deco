@@ -6,6 +6,7 @@ const bokdongCtx = bokdongCanvas.getContext("2d");
 const background = document.getElementById("background");
 const bokdong = document.getElementById("bokdong");
 const bokdongSizeSlider = document.getElementById("bokdongSizeSlider");
+const bokdongEraser = document.getElementById("bokdongEraser");
 const resetBtn = document.getElementById("resetBtn");
 const saveBtn = document.getElementById("saveBtn");
 
@@ -214,6 +215,8 @@ function resetCanvas(event) {
 }
 
 function onSaveClick() {
+	activeBokdong = null;
+	drawBokdong();
     const combinedCanvas = document.createElement('canvas');
     const combinedCtx = combinedCanvas.getContext('2d');
 
