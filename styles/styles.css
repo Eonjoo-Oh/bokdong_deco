@@ -209,11 +209,9 @@ body {
 	top: 340px;
 	display: flex;
 	flex-direction: row;
-	justify-content: start;
+	justify-content: space-between;
 	align-items: center;
-	/* margin-top: 50px;
-	margin-bottom: 50px; */
-	background-color: aqua;
+	/* background-color: aqua; */
 }
 
 .bokdong__option img {
